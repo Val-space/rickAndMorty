@@ -1,0 +1,13 @@
+.select-field {
+  width: 340px;
+  height: fit-content;
+  padding: 30px;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 5px;
+}
+
+.characters-section {
+  display: flex;
+  padding: 40px;
+}

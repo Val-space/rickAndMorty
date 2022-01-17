@@ -1,0 +1,28 @@
+.container {
+  padding-top: 40px;
+}
+
+.profile {
+  display: flex;
+  justify-content: center; 
+  gap: 50px;
+}
+
+.profile-info {
+  color: #fff;
+  border: 1px solid #fff;
+  border-radius: 2px;
+  padding: 10px;
+  min-width: 300px;
+  max-width: 400px;
+}
+
+.profile-info__row {
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.profile-info__row > span {
+  color: #9bff00;
+  font-weight: 500;
+}
