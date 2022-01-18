@@ -1,6 +1,6 @@
 {
   "name": "rick-morty",
-  "homepage": ".",
+  "homepage": "https://val-space.github.io/rickAndMorty/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
