@@ -57,7 +57,7 @@ export const CharacterInformation = ({ characters }) => {
             </div>
           </div>
         </section>
-        <Link to="/">
+        <Link to="/rickAndMorty">
           <Button sx={{ mt: 6 }} variant="contained" color="success">Go back to the main page</Button>
         </Link>
       </div>

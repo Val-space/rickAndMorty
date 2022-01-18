@@ -54,15 +54,15 @@ function App() {
         <Routes>
           {characters && (
             <>
-              <Route path="/" element={
+              <Route path="/rickAndMorty" element={
                 <CharactersList
                   characters={characters}
                   updateFavs={updateFavs}
                   favCharacters={favCharacters}
                 />}
               />
-              <Route path="/:id" element={<CharacterInformation characters={characters} />} />
-              <Route path="/favs" element={<LikedCharacters favCharacters={favCharacters} />} />
+              <Route path="rickAndMorty/:id" element={<CharacterInformation characters={characters} />} />
+              <Route path="rickAndMorty/favs" element={<LikedCharacters favCharacters={favCharacters} />} />
             </>)}
         </Routes>
       }

@@ -19,7 +19,7 @@ export const Character = React.memo(({ character, updateFavs, favCharacters }) =
       }
       disablePadding
     >
-      <Link to={`/${character.id}`} key={character.id}>
+      <Link to={`/rickAndMorty/${character.id}`} key={character.id}>
         <ListItemButton>
           <ListItemAvatar>
             <Avatar
