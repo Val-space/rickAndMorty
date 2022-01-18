@@ -8,7 +8,7 @@ import { LikedCharacters } from './LikedCharacters/LikedCharacters';
 
 function App() {
   const [characters, setCharacters] = useState(null);
-  const [favCharacters, setFavCharacters] = useState(null);
+  const [favCharacters, setFavCharacters] = useState([]);
 
   useEffect(() => {
     const getData = async () => {
@@ -17,32 +17,46 @@ function App() {
     }
 
     getData();
+
+    const localData = localStorage.getItem('favCharacters');
+
+    if (localData) {
+      setFavCharacters(JSON.parse(localData));
+    }
   }, []);
 
-  const addToFav = (charID) => {
+  const updateFavs = (charID) => {
     const favoriteChar = characters.filter(char => char.id === charID);
-    if (!favCharacters) {
+
+    if (favCharacters.length === 0) {
       setFavCharacters(favoriteChar);
     } else {
+
       if (favCharacters.find(char => char.id === charID)) {
         setFavCharacters(favCharacters.filter(char => char.id !== charID));
       } else {
         setFavCharacters([...favCharacters, ...characters.filter(char => char.id === charID)]);
       }
-    }   
-    console.log(favCharacters);
+    }
+
+    localStorage.setItem('favCharacters', JSON.stringify(favCharacters));
   };
 
-  // console.log(characters);
   return (
     <div className="App">
       <Routes>
         {characters && (
           <>
-          <Route path="/" element={<CharactersList characters={characters} addToFav={addToFav} />} /> 
-          <Route path="/:id" element={<CharacterInformation characters={characters} />} />
-          <Route path="/favs" element={<LikedCharacters favCharacters={favCharacters} />} />
-        </>)}
+            <Route path="/" element={
+              <CharactersList
+                characters={characters}
+                updateFavs={updateFavs}
+                favCharacters={favCharacters}
+              />}
+            />
+            <Route path="/:id" element={<CharacterInformation characters={characters} />} />
+            <Route path="/favs" element={<LikedCharacters favCharacters={favCharacters} />} />
+          </>)}
       </Routes>
     </div>
   );

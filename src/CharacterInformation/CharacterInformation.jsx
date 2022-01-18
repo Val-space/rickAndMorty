@@ -3,22 +3,27 @@ import { useParams } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import './characterPage.css';
 
-
 export const CharacterInformation = ({ characters }) => {
-  // const [currentCaracter, setCurrentCharacter] = useState(null);
   const { id } = useParams();
-
-  // console.log(characters.filter(char => char.id === parseInt(id))[0]);
   const currentCaracter = characters.filter(char => char.id === parseInt(id))[0];
-  // useEffect(() => {
-  //   setCurrentCharacter(characters.filter(char => char.id === id))
-  // },[]);
+
+  const handleEpisodeDisplay = (episodes) => {
+    const getEpisodeNumber = episodes.map(episode => {
+      const indexSlash = episode.lastIndexOf('/');
+
+      return episode.slice(indexSlash + 1);
+    })
+
+    return getEpisodeNumber.join(', ');
+  }
 
   return (
     <>
-       <div className="container">
+      <div className="container">
         <section className="profile">
-          <img src={currentCaracter.image} />
+          <div className="profile__avatar">
+            <img src={currentCaracter.image} alt="avatar" className="profile__img" />
+          </div>
           <div className="profile-info">
             <div className="profile-info__row">
               Name: <span>{currentCaracter.name}</span>
@@ -30,7 +35,7 @@ export const CharacterInformation = ({ characters }) => {
               Gender: <span>{currentCaracter.gender}</span>
             </div>
             <div className="profile-info__row">
-              {/* {currentCaracter.episode} */}
+              Episode appearance: <br /> <span>{handleEpisodeDisplay(currentCaracter.episode)}.</span>
             </div>
             <div className="profile-info__row">
               Status: <span>{currentCaracter.status}</span>

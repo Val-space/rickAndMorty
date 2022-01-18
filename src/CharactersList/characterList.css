@@ -2,12 +2,15 @@
   width: 340px;
   height: fit-content;
   padding: 30px;
-  margin: 0 auto;
-  background-color: white;
   border-radius: 5px;
 }
 
 .characters-section {
   display: flex;
+  justify-content: space-around;
   padding: 40px;
+}
+
+.MuiAutocomplete-root fieldset{
+  border-color: #ffffff;
 }

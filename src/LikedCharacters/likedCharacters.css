@@ -1,0 +1,11 @@
+.favCharacters-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  padding: 30px;
+  gap: 20px;
+}
+
+.empty-list-info {
+  color: #fff;
+}
