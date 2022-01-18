@@ -1,11 +1,18 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import './characterPage.css';
 
 export const CharacterInformation = ({ characters }) => {
+  const [currentCharacter, setCurrentCharacter] = useState(null);
   const { id } = useParams();
-  const currentCaracter = characters.filter(char => char.id === parseInt(id))[0];
+
+  useEffect(() => {
+    const current = characters.filter(char => char.id === parseInt(id))[0];
+
+    setCurrentCharacter(current);
+  })
 
   const handleEpisodeDisplay = (episodes) => {
     const getEpisodeNumber = episodes.map(episode => {
@@ -17,34 +24,36 @@ export const CharacterInformation = ({ characters }) => {
     return getEpisodeNumber.join(', ');
   }
 
+
   return (
     <>
+    {currentCharacter &&
       <div className="container">
         <section className="profile">
           <div className="profile__avatar">
-            <img src={currentCaracter.image} alt="avatar" className="profile__img" />
+            <img src={currentCharacter.image} alt="avatar" className="profile__img" />
           </div>
           <div className="profile-info">
             <div className="profile-info__row">
-              Name: <span>{currentCaracter.name}</span>
+              Name: <span>{currentCharacter.name}</span>
             </div>
             <div className="profile-info__row">
-              Species: <span>{currentCaracter.species}</span>
+              Species: <span>{currentCharacter.species}</span>
             </div>
             <div className="profile-info__row">
-              Gender: <span>{currentCaracter.gender}</span>
+              Gender: <span>{currentCharacter.gender}</span>
             </div>
             <div className="profile-info__row">
-              Episode appearance: <br /> <span>{handleEpisodeDisplay(currentCaracter.episode)}.</span>
+              Episode appearance: <br /> <span>{handleEpisodeDisplay(currentCharacter.episode)}.</span>
             </div>
             <div className="profile-info__row">
-              Status: <span>{currentCaracter.status}</span>
+              Status: <span>{currentCharacter.status}</span>
             </div>
             <div className="profile-info__row">
-              Location: <span>{currentCaracter.location.name}</span>
+              Location: <span>{currentCharacter.location.name}</span>
             </div>
             <div className="profile-info__row">
-              Created: <span>{new Date(currentCaracter.created).toLocaleDateString()}</span>
+              Created: <span>{new Date(currentCharacter.created).toLocaleDateString()}</span>
             </div>
           </div>
         </section>
@@ -52,6 +61,7 @@ export const CharacterInformation = ({ characters }) => {
           <Button sx={{ mt: 6 }} variant="contained" color="success">Go back to the main page</Button>
         </Link>
       </div>
+      }
     </>
   )
 }
