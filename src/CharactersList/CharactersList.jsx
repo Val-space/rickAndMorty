@@ -27,7 +27,7 @@ export const CharactersList = React.memo(({ characters, updateFavs, favCharacter
             renderInput={(params) => <TextField {...params} label="character" />}
             onChange={(event, value) => routeChange(value.id)}
           />
-          <Link to="rickAndMorty/favs">
+          <Link to="/rickAndMorty/favs">
             <Button sx={{ mt: 6 }} variant="contained" color="success">See characters you like</Button>
           </Link>
         </div>
