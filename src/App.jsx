@@ -9,11 +9,17 @@ import { LikedCharacters } from './LikedCharacters/LikedCharacters';
 function App() {
   const [characters, setCharacters] = useState(null);
   const [favCharacters, setFavCharacters] = useState([]);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const getData = async () => {
-      const charactersFromServer = await getCharacters().then(res => res.results);
-      setCharacters(charactersFromServer);
+      try {
+        const charactersFromServer = await getCharacters().then(res => res.results);
+        setCharacters(charactersFromServer);
+        setError(false);
+      } catch (error) {
+        setError(true);
+      }
     }
 
     getData();
@@ -44,20 +50,22 @@ function App() {
 
   return (
     <div className="App">
-      <Routes>
-        {characters && (
-          <>
-            <Route path="/" element={
-              <CharactersList
-                characters={characters}
-                updateFavs={updateFavs}
-                favCharacters={favCharacters}
-              />}
-            />
-            <Route path="/:id" element={<CharacterInformation characters={characters} />} />
-            <Route path="/favs" element={<LikedCharacters favCharacters={favCharacters} />} />
-          </>)}
-      </Routes>
+      {!error &&
+        <Routes>
+          {characters && (
+            <>
+              <Route path="/" element={
+                <CharactersList
+                  characters={characters}
+                  updateFavs={updateFavs}
+                  favCharacters={favCharacters}
+                />}
+              />
+              <Route path="/:id" element={<CharacterInformation characters={characters} />} />
+              <Route path="/favs" element={<LikedCharacters favCharacters={favCharacters} />} />
+            </>)}
+        </Routes>
+      }
     </div>
   );
 }
