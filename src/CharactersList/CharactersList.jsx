@@ -23,7 +23,6 @@ export const CharactersList = React.memo(({ characters, updateFavs, favCharacter
             style={{ color: '#fff' }}
             id="combo-box-demo"
             getOptionLabel={(option) => option.name}
-            value={(option) => option.name}
             options={characters}
             renderInput={(params) => <TextField {...params} label="character" />}
             onChange={(event, value) => routeChange(value.id)}
