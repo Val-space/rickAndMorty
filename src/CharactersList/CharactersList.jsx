@@ -11,7 +11,7 @@ import './characterList.css';
 export const CharactersList = React.memo(({ characters, updateFavs, favCharacters }) => {
   const navigate = useNavigate();
   const routeChange = (id) => {
-    navigate(`/${id}`);
+    navigate(`/rickAndMorty/${id}`);
   }
 
   return (
