@@ -12,7 +12,7 @@ export const CharacterInformation = ({ characters }) => {
     const current = characters.filter(char => char.id === parseInt(id))[0];
 
     setCurrentCharacter(current);
-  })
+  }, [id, characters])
 
   const handleEpisodeDisplay = (episodes) => {
     const getEpisodeNumber = episodes.map(episode => {
