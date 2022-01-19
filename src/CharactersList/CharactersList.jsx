@@ -6,9 +6,17 @@ import TextField from '@mui/material/TextField';
 import { useNavigate } from "react-router-dom";
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 import './characterList.css';
 
-export const CharactersList = React.memo(({ characters, updateFavs, favCharacters }) => {
+export const CharactersList = React.memo(({
+  characters,
+  updateFavs,
+  favCharacters,
+  page,
+  changePage
+}) => {
   const navigate = useNavigate();
   const routeChange = (id) => {
     navigate(`/rickAndMorty/${id}`);
@@ -32,14 +40,22 @@ export const CharactersList = React.memo(({ characters, updateFavs, favCharacter
           </Link>
         </div>
         <List dense sx={{ width: '100%', maxWidth: 360, bgcolor: '#f9f9f947' }}>
-          {characters.map(character => (
-            <Character
-              key={character.id}
-              character={character}
-              updateFavs={updateFavs}
-              favCharacters={favCharacters}
-            />
-          ))}
+          <Pagination
+            count={42}
+            page={page}
+            color="secondary"
+            onChange={(_, num) => changePage(num)}
+          />
+          <Stack spacing={2} >
+            {characters.map(character => (
+              <Character
+                key={character.id}
+                character={character}
+                updateFavs={updateFavs}
+                favCharacters={favCharacters}
+              />
+            ))}
+          </Stack>
         </List>
       </section>
     </>

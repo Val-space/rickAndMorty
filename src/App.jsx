@@ -1,28 +1,22 @@
-import { useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import './App.css';
 import { getCharacters } from './api/api';
-import { useEffect, useState } from 'react';
 import { CharactersList } from './CharactersList/CharactersList';
 import { CharacterInformation } from './CharacterInformation/CharacterInformation';
 import { LikedCharacters } from './LikedCharacters/LikedCharacters';
+import './App.css';
 
 function App() {
-  // const setFavsFromLocStorage = () => {
-  //   const localData = localStorage.getItem('favCharacters');
-
-  //   return localData ? localData : [];
-  // }
-
   const [characters, setCharacters] = useState(null);
   const [favCharacters, setFavCharacters] = useState([]);
   const [error, setError] = useState(false);
+  const [page, setPage] = useState(1);
 
 
   useEffect(() => {
     const getData = async () => {
       try {
-        const charactersFromServer = await getCharacters().then(res => res.results);
+        const charactersFromServer = await getCharacters(1).then(res => res.results);
         setCharacters(charactersFromServer);
         setError(false);
       } catch (error) {
@@ -44,6 +38,21 @@ function App() {
     localStorage.setItem('favCharacters', JSON.stringify(favCharacters));
   }, [favCharacters]);
 
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const charactersFromServer = await getCharacters(page).then(res => res.results);
+        setCharacters(charactersFromServer);
+        setError(false);
+      } catch (error) {
+        setError(true);
+      }
+    }
+
+    getData();
+  }, [page])
+
   const updateFavs = useCallback((charID) => {
     const favoriteChar = characters.filter(char => char.id === charID);
 
@@ -59,6 +68,10 @@ function App() {
     }
   }, [characters, favCharacters]);
 
+  const changePage = useCallback((pageNum) => {
+    setPage(pageNum)
+  }, [])
+
   return (
     <div className="App">
       {!error &&
@@ -70,6 +83,8 @@ function App() {
                   characters={characters}
                   updateFavs={updateFavs}
                   favCharacters={favCharacters}
+                  page={page}
+                  changePage={changePage}
                 />}
               />
               <Route path="/rickAndMorty/:id" element={<CharacterInformation characters={characters} />} />
