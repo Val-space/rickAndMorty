@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import { getCharacters } from './api/api';
@@ -7,9 +8,16 @@ import { CharacterInformation } from './CharacterInformation/CharacterInformatio
 import { LikedCharacters } from './LikedCharacters/LikedCharacters';
 
 function App() {
+  // const setFavsFromLocStorage = () => {
+  //   const localData = localStorage.getItem('favCharacters');
+
+  //   return localData ? localData : [];
+  // }
+
   const [characters, setCharacters] = useState(null);
   const [favCharacters, setFavCharacters] = useState([]);
   const [error, setError] = useState(false);
+
 
   useEffect(() => {
     const getData = async () => {
@@ -29,9 +37,14 @@ function App() {
     if (localData) {
       setFavCharacters(JSON.parse(localData));
     }
+
   }, []);
 
-  const updateFavs = (charID) => {
+  useEffect(() => {
+    localStorage.setItem('favCharacters', JSON.stringify(favCharacters));
+  }, [favCharacters]);
+
+  const updateFavs = useCallback((charID) => {
     const favoriteChar = characters.filter(char => char.id === charID);
 
     if (favCharacters.length === 0) {
@@ -44,9 +57,7 @@ function App() {
         setFavCharacters([...favCharacters, ...characters.filter(char => char.id === charID)]);
       }
     }
-
-    localStorage.setItem('favCharacters', JSON.stringify(favCharacters));
-  };
+  }, [characters, favCharacters]);
 
   return (
     <div className="App">
